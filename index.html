@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viaja con Álvaro - Insights de Mercado</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome (using CDN for icons as text/font, strictly NO SVG images) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0F172A',   // Deep Blue (Professional)
+                            primary: '#0EA5E9', // Sky Blue (Trust/Travel)
+                            accent: '#F59E0B',  // Amber/Gold (Luxury/Warmth - Madrid Sun)
+                            light: '#F0F9FF',   // Light background
+                            vibrant: '#06B6D4'  // Cyan (Energetic/Picardía)
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Chart Container Styling Rules */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Max width constraint */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        
+        /* Custom Scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0EA5E9; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0284C7; 
+        }
+    </style>
+    <!-- 
+    PALETTE SELECTION: "Energetic & Professional"
+    Hex Codes: #0F172A (Dark), #0EA5E9 (Primary), #F59E0B (Accent), #06B6D4 (Vibrant)
+    Reason: Combines the deep blue of corporate trust with the vibrant cyan/gold of Caribbean/Spanish warmth.
+    -->
+    <!-- 
+    NARRATIVE PLAN:
+    1. Header: Brand Identity & Introduction.
+    2. Market Snapshot: Why this niche works (Growth trends).
+    3. Buyer Persona: The Data behind the "Viajero Exigente".
+    4. Competitive Landscape: Why standard agencies fail vs Álvaro.
+    5. SWOT Analysis: Strategic position.
+    6. Funnel Strategy: The path to conversion.
+    7. Recommendations: Quick wins.
+    -->
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+    <!-- Section 1: Introduction & Header -->
+    <header class="bg-brand-dark text-white py-12 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-brand-primary">Viaja con Álvaro</h1>
+            <h2 class="text-xl md:text-2xl text-gray-300 font-light mb-6">Informe de Inteligencia de Mercado & Estrategia</h2>
+            <div class="inline-block bg-brand-accent text-brand-dark font-bold px-6 py-2 rounded-full shadow-md">
+                Lujo Experiencial • Conexión Cultural • Curaduría Local
+            </div>
+            <p class="mt-8 max-w-3xl mx-auto text-gray-400">
+                Análisis estratégico para posicionar la marca en el sector de turismo de lujo para el mercado puertorriqueño.
+                Transformando la "picardía" en una ventaja competitiva premium.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 gap-12">
+
+        <!-- Section 2: Market Overview (Trends) -->
+        <section class="bg-white rounded-xl shadow-md p-6 md:p-8">
+            <div class="mb-6 border-l-4 border-brand-vibrant pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">1. Resumen del Sector: La Era de la Experiencia</h3>
+                <p class="text-gray-600 mt-2">
+                    El turismo estándar está estancado. El viajero actual, especialmente el de alto poder adquisitivo, busca 
+                    conexión emocional y acceso exclusivo ("Insider Access") por encima de los lujos materiales tradicionales.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Data Point 1: Goal -> Change (Line Chart) -->
+                <!-- Visualization: Line Chart showing growth of Experiential vs Standard Tourism -->
+                <div>
+                    <h4 class="text-lg font-semibold text-brand-primary mb-2 text-center">Proyección de Demanda (Interés de Búsqueda)</h4>
+                    <div class="chart-container">
+                        <canvas id="marketTrendChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 text-center mt-2 italic">
+                        El interés por "Experiencias Locales" supera al "Turismo Todo Incluido" tradicional.
+                    </p>
+                </div>
+
+                <!-- Qualitative Insights -->
+                <div class="space-y-4">
+                    <div class="bg-brand-light p-4 rounded-lg border border-blue-100">
+                        <i class="fas fa-arrow-trend-up text-brand-accent text-xl mb-2"></i>
+                        <h5 class="font-bold text-brand-dark">Driver #1: Hiper-personalización</h5>
+                        <p class="text-sm text-gray-600">El cliente quiere sentir que el viaje fue diseñado *solo* para él, huyendo de los paquetes masivos.</p>
+                    </div>
+                    <div class="bg-brand-light p-4 rounded-lg border border-blue-100">
+                        <i class="fas fa-hand-holding-heart text-brand-vibrant text-xl mb-2"></i>
+                        <h5 class="font-bold text-brand-dark">Driver #2: Seguridad Emocional</h5>
+                        <p class="text-sm text-gray-600">Para el viajero puertorriqueño, la conexión cultural y el idioma eliminan la barrera del miedo a lo desconocido.</p>
+                    </div>
+                    <div class="bg-brand-light p-4 rounded-lg border border-blue-100">
+                        <i class="fas fa-users-viewfinder text-brand-primary text-xl mb-2"></i>
+                        <h5 class="font-bold text-brand-dark">Driver #3: Validación Social</h5>
+                        <p class="text-sm text-gray-600">El viaje no termina hasta que se comparte. Los lugares "secretos" generan alto valor social (Instagrammable).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Buyer Persona Analysis -->
+        <section class="bg-white rounded-xl shadow-md p-6 md:p-8">
+            <div class="mb-6 border-l-4 border-brand-accent pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">2. El Cliente: "El Viajero Boricua Exigente"</h3>
+                <p class="text-gray-600 mt-2">
+                    Un perfil dual: residentes en la Isla y la Diáspora en EE.UU., unidos por el deseo de reconectar con sus raíces hispanas con comodidad absoluta.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Visualization: Donut Chart for Demographics -->
+                <div class="md:col-span-1">
+                    <h4 class="text-lg font-semibold text-brand-dark mb-4 text-center">Origen de la Audiencia</h4>
+                    <div class="chart-container" style="height: 250px;">
+                        <canvas id="audienceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Visualization: Bar Chart for Motivations vs Pains -->
+                <div class="md:col-span-2">
+                    <h4 class="text-lg font-semibold text-brand-dark mb-4 text-center">Motivaciones vs. Dolores (Pains)</h4>
+                    <div class="chart-container">
+                        <canvas id="painsGainsChart"></canvas>
+                    </div>
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-red-50 p-3 rounded text-red-800 border-l-4 border-red-400">
+                            <strong>Dolor Principal:</strong> "Miedo a la trampa turística". Odian sentir que pagaron de más por algo artificial.
+                        </div>
+                        <div class="bg-green-50 p-3 rounded text-green-800 border-l-4 border-green-400">
+                            <strong>Deseo Principal:</strong> "Ser un Insider". Quieren acceso a la trastienda de Madrid, no solo la fachada.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Competitor Analysis -->
+        <section class="bg-white rounded-xl shadow-md p-6 md:p-8">
+            <div class="mb-6 border-l-4 border-brand-primary pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">3. Análisis Competitivo: La Propuesta de Valor</h3>
+                <p class="text-gray-600 mt-2">
+                    Mientras las agencias tradicionales compiten por precio y estandarización, "Viaja con Álvaro" compite por <strong>Confianza y Acceso</strong>.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Visualization: Radar Chart comparing attributes -->
+                <div>
+                    <h4 class="text-lg font-semibold text-brand-dark mb-2 text-center">Matriz de Diferenciación</h4>
+                    <div class="chart-container">
+                        <canvas id="competitorRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Comparison Cards (HTML Structure) -->
+                <div class="flex flex-col justify-center gap-4">
+                    <!-- Competitor Card -->
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-gray-400 opacity-75">
+                        <h5 class="font-bold text-gray-600 text-lg mb-1">Agencia Tradicional / OTA</h5>
+                        <p class="text-sm text-gray-500 mb-2">Enfoque: Volumen y Estandarización</p>
+                        <ul class="text-sm text-gray-600 list-disc list-inside">
+                            <li>Itinerarios rígidos y predecibles.</li>
+                            <li>Guías impersonales (estilo "lectura de guion").</li>
+                            <li>Sensación de ser "uno más del rebaño".</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Hero Card -->
+                    <div class="bg-sky-50 p-5 rounded-lg border-l-4 border-brand-primary shadow-md transform scale-105 transition-transform">
+                        <h5 class="font-bold text-brand-dark text-xl mb-1">Viaja con Álvaro</h5>
+                        <p class="text-sm text-brand-primary font-semibold mb-2">Enfoque: Lujo Experiencial & Personalidad</p>
+                        <ul class="text-sm text-gray-700 list-none space-y-2">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Acceso VIP:</strong> Lugares sin turistas.</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i><strong>El "Amigo Experto":</strong> Trato cercano y pícaro.</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Flexibilidad:</strong> Adaptación en tiempo real.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: SWOT Analysis (DAFO) -->
+        <section class="bg-white rounded-xl shadow-md p-6 md:p-8">
+            <div class="mb-6 border-l-4 border-brand-vibrant pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">4. Análisis DAFO (SWOT)</h3>
+                <p class="text-gray-600 mt-2">
+                    Mapa estratégico de la situación actual del negocio para maximizar los recursos publicitarios.
+                </p>
+            </div>
+
+            <!-- SWOT Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Strengths -->
+                <div class="bg-green-50 p-5 rounded-lg border-t-4 border-green-500 shadow-sm">
+                    <h4 class="font-bold text-green-900 text-lg mb-3"><i class="fas fa-dumbbell mr-2"></i>Fortalezas</h4>
+                    <ul class="space-y-2 text-sm text-green-800">
+                        <li class="flex items-start"><span class="mr-2">•</span>Marca personal potente (Álvaro) que genera confianza inmediata.</li>
+                        <li class="flex items-start"><span class="mr-2">•</span>Nicho de mercado muy específico (Boricuas) y desatendido.</li>
+                        <li class="flex items-start"><span class="mr-2">•</span>Producto visualmente atractivo para redes sociales.</li>
+                    </ul>
+                </div>
+
+                <!-- Weaknesses -->
+                <div class="bg-red-50 p-5 rounded-lg border-t-4 border-red-500 shadow-sm">
+                    <h4 class="font-bold text-red-900 text-lg mb-3"><i class="fas fa-link-slash mr-2"></i>Debilidades</h4>
+                    <ul class="space-y-2 text-sm text-red-800">
+                        <li class="flex items-start"><span class="mr-2">•</span>Dependencia de la gestión manual (High-touch es difícil de escalar).</li>
+                        <li class="flex items-start"><span class="mr-2">•</span>Presupuesto inicial de Ads limitado (500€-1000€).</li>
+                        <li class="flex items-start"><span class="mr-2">•</span>Necesidad de validar al "equipo" para no depender solo de Álvaro.</li>
+                    </ul>
+                </div>
+
+                <!-- Opportunities -->
+                <div class="bg-blue-50 p-5 rounded-lg border-t-4 border-blue-500 shadow-sm">
+                    <h4 class="font-bold text-blue-900 text-lg mb-3"><i class="fas fa-lightbulb mr-2"></i>Oportunidades</h4>
+                    <ul class="space-y-2 text-sm text-blue-800">
+                        <li class="flex items-start"><span class="mr-2">•</span><strong>Ads Escalonados:</strong> Usar contenido orgánico viral como anuncios.</li>
+                        <li class="flex items-start"><span class="mr-2">•</span><strong>Diáspora USA:</strong> Mercado con mayor poder adquisitivo y cercanía a vuelos.</li>
+                        <li class="flex items-start"><span class="mr-2">•</span>Empaquetar "micro-experiencias" como entrada al funnel (Low Ticket).</li>
+                    </ul>
+                </div>
+
+                <!-- Threats -->
+                <div class="bg-amber-50 p-5 rounded-lg border-t-4 border-amber-500 shadow-sm">
+                    <h4 class="font-bold text-amber-900 text-lg mb-3"><i class="fas fa-triangle-exclamation mr-2"></i>Amenazas</h4>
+                    <ul class="space-y-2 text-sm text-amber-800">
+                        <li class="flex items-start"><span class="mr-2">•</span>Saturación de anuncios de turismo genérico que aumentan el CPM.</li>
+                        <li class="flex items-start"><span class="mr-2">•</span>Cambios económicos que reduzcan el gasto en ocio de lujo.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Strategic Funnel -->
+        <section class="bg-white rounded-xl shadow-md p-6 md:p-8">
+            <div class="mb-6 border-l-4 border-brand-primary pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">5. Estrategia de Funnel & Insights Finales</h3>
+                <p class="text-gray-600 mt-2">
+                    Estructura recomendada para convertir el tráfico frío en clientes leales utilizando los recursos actuales.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 relative">
+                <!-- Visual Flow Connector Lines (Desktop only) -->
+                <div class="hidden lg:block absolute top-1/2 left-0 w-full h-2 bg-gray-100 -z-10 transform -translate-y-1/2 rounded"></div>
+
+                <!-- TOFU Card -->
+                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-lg relative z-10 flex flex-col items-center text-center">
+                    <div class="w-12 h-12 bg-brand-vibrant text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-md">1</div>
+                    <h4 class="font-bold text-brand-dark mb-2">TOFU: Atracción</h4>
+                    <span class="text-xs font-semibold text-brand-primary uppercase tracking-wider mb-3">Objetivo: Awareness</span>
+                    <p class="text-sm text-gray-600 mb-4">"Descubre el Madrid Secreto". Vídeos cortos, dinámicos y con humor.</p>
+                    <div class="mt-auto w-full bg-gray-50 p-2 rounded text-xs text-gray-500">
+                        <strong>KPI:</strong> VTR (Video Through Rate) y Clicks
+                    </div>
+                </div>
+
+                <!-- MOFU Card -->
+                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-lg relative z-10 flex flex-col items-center text-center">
+                    <div class="w-12 h-12 bg-brand-primary text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-md">2</div>
+                    <h4 class="font-bold text-brand-dark mb-2">MOFU: Conexión</h4>
+                    <span class="text-xs font-semibold text-brand-primary uppercase tracking-wider mb-3">Objetivo: Leads</span>
+                    <p class="text-sm text-gray-600 mb-4">Testimonios y presentación del Equipo. "No viajas solo, viajas con expertos".</p>
+                    <div class="mt-auto w-full bg-gray-50 p-2 rounded text-xs text-gray-500">
+                        <strong>KPI:</strong> Costo por Lead (CPL)
+                    </div>
+                </div>
+
+                <!-- BOFU Card -->
+                <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-lg relative z-10 flex flex-col items-center text-center">
+                    <div class="w-12 h-12 bg-brand-accent text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 shadow-md">3</div>
+                    <h4 class="font-bold text-brand-dark mb-2">BOFU: Conversión</h4>
+                    <span class="text-xs font-semibold text-brand-primary uppercase tracking-wider mb-3">Objetivo: Venta</span>
+                    <p class="text-sm text-gray-600 mb-4">Escasez y Exclusividad. "Agenda tu llamada. Cupos limitados para verano."</p>
+                    <div class="mt-auto w-full bg-gray-50 p-2 rounded text-xs text-gray-500">
+                        <strong>KPI:</strong> Tasa de Cierre y ROAS
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Wins Section -->
+            <div class="mt-8 bg-brand-dark text-white p-6 rounded-xl">
+                <h4 class="text-xl font-bold text-brand-accent mb-4"><i class="fas fa-rocket mr-2"></i>Quick Wins (Victorias Rápidas)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-brand-vibrant mt-1 mr-3"></i>
+                        <p class="text-sm text-gray-300">Crear audiencia "Lookalike" basada en los seguidores de Instagram más activos.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-brand-vibrant mt-1 mr-3"></i>
+                        <p class="text-sm text-gray-300">Lanzar campaña de Retargeting a visitantes de la web con testimonio en video.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-brand-vibrant mt-1 mr-3"></i>
+                        <p class="text-sm text-gray-300">Optimizar la bio de Instagram con un enlace directo al formulario de cualificación.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-brand-vibrant mt-1 mr-3"></i>
+                        <p class="text-sm text-gray-300">Destacar historias de clientes felices ("Social Proof") en la página de inicio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-200 py-6 text-center text-gray-500 text-sm">
+        <p>&copy; 2024 Viaja con Álvaro - Documento de Estrategia Interna</p>
+    </footer>
+
+    <!-- SCRIPTS FOR CHARTS -->
+    <script>
+        // --- UTILS: Label Wrapping Logic (>16 chars) ---
+        function wrapLabel(label) {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= 16) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- COMMON CONFIG ---
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#475569';
+        
+        // Tooltip Callback for Multiline Labels
+        const tooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // --- CHART 1: Market Trends (Line) ---
+        const ctxTrend = document.getElementById('marketTrendChart').getContext('2d');
+        new Chart(ctxTrend, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024 (Est)'],
+                datasets: [
+                    {
+                        label: 'Turismo Experiencial (Lujo)',
+                        data: [20, 35, 55, 75, 90],
+                        borderColor: '#F59E0B', // Accent Gold
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 4
+                    },
+                    {
+                        label: 'Turismo Estándar (Paquetes)',
+                        data: [80, 75, 70, 65, 60],
+                        borderColor: '#94A3B8', // Gray
+                        borderDash: [5, 5],
+                        tension: 0.4,
+                        fill: false,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipConfig
+                },
+                scales: {
+                    y: { beginAtZero: true, display: false },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // --- CHART 2: Audience Origin (Donut) ---
+        const ctxAudience = document.getElementById('audienceChart').getContext('2d');
+        const audienceLabels = ['Puerto Rico (Isla)', 'Diáspora (USA/FL/NY)', 'Otros'];
+        new Chart(ctxAudience, {
+            type: 'doughnut',
+            data: {
+                labels: audienceLabels.map(wrapLabel),
+                datasets: [{
+                    data: [55, 40, 5],
+                    backgroundColor: [
+                        '#0EA5E9', // Primary Blue
+                        '#06B6D4', // Vibrant Cyan
+                        '#CBD5E1'  // Light Gray
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipConfig
+                },
+                cutout: '70%'
+            }
+        });
+
+        // --- CHART 3: Pains vs Gains (Horizontal Bar - adapted for clarity) ---
+        // Using Bar instead of Radar for Pains/Gains for better readability of text
+        const ctxPains = document.getElementById('painsGainsChart').getContext('2d');
+        const pgLabels = [
+            'Autenticidad (No Turistada)', 
+            'Logística Sin Estrés', 
+            'Conexión Cultural', 
+            'Seguridad/Confianza', 
+            'Precio Percibido'
+        ];
+        
+        new Chart(ctxPains, {
+            type: 'bar',
+            data: {
+                labels: pgLabels.map(wrapLabel),
+                datasets: [
+                    {
+                        label: 'Importancia para el Cliente',
+                        data: [95, 90, 85, 80, 60],
+                        backgroundColor: '#0EA5E9',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Satisfacción con Mercado Actual',
+                        data: [30, 50, 40, 60, 50],
+                        backgroundColor: '#CBD5E1',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y', // Horizontal bar for easier reading of labels
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipConfig
+                },
+                scales: {
+                    x: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+
+        // --- CHART 4: Competitor Analysis (Radar) ---
+        const ctxRadar = document.getElementById('competitorRadarChart').getContext('2d');
+        const radarLabels = [
+            'Personalización', 
+            'Exclusividad (Acceso)', 
+            'Precio (Accesibilidad)', 
+            'Tecnología/Rapidez', 
+            'Factor Humano'
+        ];
+
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: radarLabels.map(wrapLabel),
+                datasets: [
+                    {
+                        label: 'Viaja con Álvaro',
+                        data: [90, 95, 60, 50, 100], // High human, high exclusive, lower tech speed initially
+                        borderColor: '#06B6D4', // Vibrant
+                        backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                        pointBackgroundColor: '#06B6D4',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Agencias Tradicionales',
+                        data: [40, 30, 80, 85, 40], // High tech/price, low human/exclusive
+                        borderColor: '#94A3B8',
+                        backgroundColor: 'rgba(148, 163, 184, 0.2)',
+                        pointBackgroundColor: '#94A3B8',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: '#E2E8F0' },
+                        grid: { color: '#E2E8F0' },
+                        pointLabels: {
+                            font: { size: 11 }
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                },
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipConfig
+                }
+            }
+        });
+    </script>
+</body>
+</html>
